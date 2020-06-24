@@ -1,0 +1,70 @@
+Задача 1/7.
+Напишите запрос, подсчитывающий общее количество строк в таблице products_data_all. Назовите переменную cnt.
+
+SELECT 
+    COUNT(*) AS cnt
+FROM
+	products_data_all;
+  
+Задача 2/7.
+Напишите запрос, подсчитывающий количество строк в таблице products_data_all; 
+количество строк в столбце name и количество уникальных продуктов. 
+Назовите результирующие переменные cnt, name_cnt и name_uniq_cnt соответственно.
+
+SELECT 
+    COUNT(*) AS cnt,
+    COUNT(name) AS name_cnt,
+    COUNT(DISTINCT name) AS name_uniq_cnt	
+FROM
+	products_data_all;
+  
+Задача 3/7.
+Напишите запрос, подсчитывающий среднюю цену по всем продуктам из таблицы products_data_all. 
+Стоимость товаров указана в столбце price. Результирующую переменную назовите average.
+
+SELECT 
+	AVG(price) AS average
+FROM
+	products_data_all;
+
+Задача 4/7.
+Напишите запрос, подсчитывающий среднюю цену товара с названием 'Молоко пастеризованное Домик в деревне 2,5%, 930 мл' в магазине 'Семёрочка'. 
+Результирующую переменную назовите average.
+
+SELECT 
+	AVG(price) AS average
+FROM
+	products_data_all
+WHERE
+    name = 'Молоко пастеризованное Домик в деревне 2,5%, 930 мл' AND name_store = 'Семёрочка';
+    
+Задача 5/7.
+Напишите запрос, подсчитывающий сумму стоимости всех продуктов в магазине 'Молочные вкусности'. 
+Назовите переменную summa.
+
+SELECT 
+	SUM(price) AS summa
+FROM
+	products_data_all
+WHERE
+    name_store = 'Молочные вкусности';
+    
+Задача 6/7.
+Найдите цену самого дорогого товара таблицы products_data_all. 
+Назовите переменную max_price.
+
+SELECT 
+	max(price) AS max_price
+FROM
+	products_data_all;
+  
+Задача 7/7.
+Напишите запрос, который посчитает разницу между максимальной и минимальной ценой продукта 'Масло топленое Ecotavush 99%, 500 г'
+в магазине 'ВкусМилк'. Назовите переменную max_min_diff.
+
+SELECT 
+	(max(price)-min(price)) AS max_min_diff
+FROM
+	products_data_all
+WHERE
+    name_store = 'ВкусМилк' AND name = 'Масло топленое Ecotavush 99%, 500 г';
