@@ -12,3 +12,28 @@ FROM
 RIGHT JOIN weather ON CAST(weather.date as date) = cast(transactions.date as date)
 WHERE 
     transactions.date is null;
+    
+Задача 2.
+Любой запрос с LEFT JOIN можно записать как запрос с RIGHT JOIN. И наоборот. Решите задачу из прошлой темы, но способом RIGHT JOIN.
+Выведите уникальные названия товаров, которые не продавались в магазине с уникальным идентификатором 3.
+1) Выберите уникальные названия продуктов name из таблицы products. Сохраните их в переменной name.
+2) Методом RIGHT JOIN объедините подзапрос subquery с внешним запросом по полю id_product. 
+В подзапросе выберите уникальные id_product из таблицы transactions, где id_store равен 3.
+3) В блоке WHERE внешнего запроса выполните проверку значений поля id_product таблицы subquery на пропуски.
+
+SELECT
+    distinct(products.name) as name
+FROM 
+	(
+	SELECT --выберите уникальные продукты из магазина 3
+		distinct(id_product) as id_product,
+        id_store
+	FROM
+		transactions
+	WHERE
+		id_store = 3
+	) AS subquery
+RIGHT JOIN products ON products.id_product = subquery.id_product
+WHERE 
+subquery.id_product is null;
+
