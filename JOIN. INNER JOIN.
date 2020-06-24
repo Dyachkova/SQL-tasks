@@ -1,0 +1,24 @@
+Задача 5/5.
+
+Выведите цену товаров на 13 июня 2019 года, для которых единица измерения — 'мл'.
+Заполучите:
+название товара — name из таблицы products
+категорию — category из таблицы products
+единицы измерения — units из таблицы products
+вес — weight из таблицы products
+цену — price из таблицы products_stores
+Соедините методом INNER JOIN таблицы products_stores и products по полю id_product.
+Выведите переменные: name, category, units, weight, price.
+
+SELECT 
+	name,
+    category,
+    units,
+    weight,
+    products_stores.price as price
+FROM
+	products
+INNER JOIN products_stores ON products_stores.id_product = products.id_product
+WHERE 
+	products.units = 'мл'
+    and cast(products_stores.date_upd as date) = '2019-06-13';
