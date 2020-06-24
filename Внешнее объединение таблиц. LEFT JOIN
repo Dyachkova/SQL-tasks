@@ -1,0 +1,20 @@
+Задача 3.
+Выведите названия продуктов, которые не продавались ни в одном магазине 11 июня 2019 года.
+1) Выберите уникальные названия продуктов name из таблицы products. Сохраните их в переменной name.
+2) Методом LEFT JOIN объедините внешний запрос с подзапросом subquery по полю id_product. В подзапросе выберите id_product и id_store на 11 июня 2019 года.
+
+SELECT 
+	distinct(products.name) as name
+FROM
+	products 
+LEFT JOIN
+	(
+	SELECT --выберите айди товара и айди магазина на 2019-06-11
+        transactions.id_product as id_product,  
+        id_store
+	FROM
+		transactions
+	WHERE
+        cast(transactions.date as date) = '2019-06-11'
+	) AS subquery ON subquery.id_product = products.id_product
+Where subquery.id_store is null; 
