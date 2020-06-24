@@ -1,0 +1,14 @@
+Задача 1.
+Методом RIGHT JOIN выведите даты, на которые нет данных о транзакциях, но есть информация о погоде:
+1) Получите дату (date) из таблицы weather. Обратите внимание, что дату нужно привести к правильному типу конструкцией CAST.
+2) Присоедините таблицу weather к таблице transactions методом RIGHT JOIN по полю date.
+3) Составьте срез данных в блоке WHERE: выберите только пустые даты из таблицы transactions конструкцией IS NULL.
+4) Выведите поле date результирующей таблицы.
+
+SELECT 
+	CAST(weather.date as date)
+FROM
+	transactions
+RIGHT JOIN weather ON CAST(weather.date as date) = cast(transactions.date as date)
+WHERE 
+    transactions.date is null;
