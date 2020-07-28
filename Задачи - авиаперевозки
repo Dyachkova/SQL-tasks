@@ -1,0 +1,34 @@
+Для каждой недели с 23 июля по 30 сентября 2018 года посчитайте количество билетов, купленных на рейсы в Москву 
+(номер недели week_number и количество билетов ticket_amount). 
+Получите таблицу, в которой будет информация о количестве купленных за неделю билетов; отметка, 
+проходил ли в эту неделю фестиваль; название фестиваля festival_name и номер недели week_number.
+Выводите столбцы в таком порядке: - week_number - ticket_amount - festival_week - festival_name.
+
+
+SELECT 
+    SUBQ1.week_number AS week_number,
+    SUBQ1.ticket_amount AS ticket_amount,
+    SUBQ2.festival_week AS festival_week,
+    SUBQ2.festival_name AS festival_name
+FROM (SELECT
+        EXTRACT(week FROM flights.arrival_time :: date) AS week_number,
+        COUNT(ticket_flights.ticket_no) AS ticket_amount
+      FROM
+          flights
+      LEFT JOIN ticket_flights ON ticket_flights.flight_id = flights.flight_id
+      LEFT JOIN airports ON airports.airport_code = flights.arrival_airport
+      WHERE
+          (city like '%Москва%') and (cast(arrival_time as date) between '2018-07-23' and '2018-09-30')
+      GROUP BY
+          week_number) AS SUBQ1
+LEFT JOIN (SELECT
+              EXTRACT(week FROM festival_date) AS festival_week,
+              festival_name
+           FROM 
+              festivals
+           WHERE
+              (festival_city like '%Москва%') and (cast(festival_date as date) between '2018-07-23' and '2018-09-30')) AS SUBQ2
+           ON SUBQ2.festival_week = SUBQ1.week_number
+ORDER BY
+          week_number
+
