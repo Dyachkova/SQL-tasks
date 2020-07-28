@@ -1,4 +1,27 @@
 Задача 1/3.
+Посчитайте количество рейсов по всем моделям самолётов Boeing, Airbus и другим ('other') в сентябре. 
+Типы моделей поместите в столбец type_aircraft, а количество рейсов — во flights_amount. Выведите их на экран.
+
+SELECT
+    count(flights.flight_id) as flights_amount
+FROM
+    flights
+Inner join
+    aircrafts on flights.aircraft_code = aircrafts.aircraft_code
+where
+    (MODEL like '%Boeing%') and (cast(flights.departure_time as date) between '2018-09-01' and '2018-09-30')
+union all
+SELECT
+    count(flights.flight_id) as flights_amount
+FROM
+    flights
+Inner join
+    aircrafts on flights.aircraft_code = aircrafts.aircraft_code
+where
+    (MODEL like '%Airbus%') and (cast(flights.departure_time as date) between '2018-09-01' and '2018-09-30');
+
+
+Задача 2/3.
 Посчитайте среднее количество прибывающих рейсов в день для каждого города за август 2018 года. 
 Назовите получившееся поле average_flights, вместе с ним выведите столбец city.
 Выводите столбцы в таком порядке: - city - average_flights
@@ -21,7 +44,7 @@ GROUP BY
     city
 
 
-Задача 2/3. 
+Задача 3/3. 
 Установите фестивали, которые проходили с 23 июля по 30 сентября 2018 года в Москве, 
 и номер недели, в которую они проходили. Выведите название фестиваля festival_name и номер недели festival_week.
 
@@ -34,7 +57,7 @@ WHERE
     (festival_city like '%Москва%') and (cast(festival_date as date) between '2018-07-23' and '2018-09-30')
 
 
-Задача 3/3. 
+Задача 4/3. 
 Для каждой недели с 23 июля по 30 сентября 2018 года посчитайте количество билетов, купленных на рейсы в Москву 
 (номер недели week_number и количество билетов ticket_amount). 
 Получите таблицу, в которой будет информация о количестве купленных за неделю билетов; отметка, 
